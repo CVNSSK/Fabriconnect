@@ -1,0 +1,11 @@
+{% extends 'layout.html' %}
+{% block content %}
+{% include 'navbar.html' %}
+
+<div class="container p-auto">
+  <form method='post' class="form-inline justify-content-center"  action="{{url_for('imgresult')}}" enctype="multipart/form-data">
+    <input type="file" class="form-control form-control-lg " accept="image/*" name="image" >
+    <button class="btn btn-primary btn-lg my-2 my-sm-0" type="submit">Search By Image</button>
+  </form>
+</div>
+{% endblock content %}

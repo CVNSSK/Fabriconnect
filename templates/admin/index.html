@@ -1,0 +1,80 @@
+{% extends 'layout.html' %}
+{% block content %}
+<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="{{url_for('home')}}">Fabfind</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item active">
+              <a class="nav-link" href="{{url_for('admin')}}">shopkeeper <span class="sr-only">(current)</span></a>
+            </li>
+              <li class="nav-item">
+                <a href="{{url_for('logout')}}" class="nav-link">Logout</a>
+              </li>
+            </li>
+          </ul>
+        </div>
+      </nav>
+</div>
+
+<!--==========END NAVBAR ==============-->
+
+<div class="container">
+    {% include '_messages.html' %}
+    <table class="table tbale-sm">
+        <thead>
+            <th>id</th>
+            <th>Name</th>
+            <th>UserName</th>
+            <th>Email</th>
+            <th>Contact</th>
+            <th>Delete</th>
+        </thead>
+        <tbody>
+          {% for shopkeeper in shopkeepers %}
+          <tr>
+
+            <td>{{ shopkeeper.id }}</td>
+            <td>{{ shopkeeper.name }}</td>
+            <td>{{ shopkeeper.username }}</td>
+            <td>{{ shopkeeper.email }}</td>
+            <td>{{ shopkeeper.contact }}</td>
+
+            <td><button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#exampleModal-{{shopkeeper.id}}">
+              Delete
+            </button></td>
+          </tr>
+
+ <!--============= MODEL ===================-->
+        <div class="modal fade" id="exampleModal-{{shopkeeper.id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">{{shopkeeper.name }}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+                </button>
+              </div>
+              <div class="modal-body">
+                <p class="text-danger">Are you Sure that you want to delete this Merchant ({{ shopkeeper.name }})</p>
+              </div>
+              <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cancel</button>
+                <form action="{{url_for('deleteshopkeeper',id=shopkeeper.id)}}" method="post">
+                  <button type="submit" class="btn btn-danger">Delete</button>
+                </form>
+                
+              </div>
+            </div>
+          </div>
+        </div>
+<!--==============MODEL ===================-->
+
+          {% endfor %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}
